@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const Users = require('./auth-modal');
 
 function generateToken(user) {
   const payload = {
@@ -14,8 +15,8 @@ function generateToken(user) {
 
 router.post('/register', (req, res) => {
   // implement registration
-  const { username, department, password } = req.body;
-    Users.insert({ username, department, password: bcrypt.hashSync(password, 8) })
+  const { username, password } = req.body;
+    Users.insert({ username, password: bcrypt.hashSync(password, 8) })
         .then(id => {
             res.status(201).json({ message: "User registered", id });
         })
